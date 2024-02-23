@@ -1,0 +1,108 @@
+.scrollable-container {
+    width: 100%; /* 容器的宽度 */
+    height: 390px; /* 容器的高度 */
+    overflow-y: scroll; /* 允许垂直方向上的滚动 */
+    border: 1px solid #000; /* 容器边框，增加可见性 */
+    padding: 10px; /* 文本与容器边缘的间距 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    background-color: #f0f0f0;
+    border-radius: 3px;
+}
+.scrollable-container::-webkit-scrollbar {
+width: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+background: #e0e0e0;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+.text-block {
+background-color: #f0f0f0; /* 默认背景颜色 */
+width: 100%;
+padding: 10px;
+margin: 10px;
+cursor: pointer;
+}
+
+.text-block:hover {
+background-color: #ddd; /* 鼠标悬停的背景颜色 */
+}
+
+.interactive-div-matrix {
+    margin-bottom: 2%;
+    background-color: #e7f2f8; /* 初始背景颜色 */
+    /* 其他需要的样式，例如padding, text-align等 */
+    transition: background-color 0.3s; /* 使颜色变化更平滑 */
+    font-weight: 500;
+}
+
+.interactive-div-matrix:hover {
+    background-color: #14fc94; /* 鼠标悬停时的背景颜色 */
+}
+
+.interactive-div-matrix:active {
+    background-color: #595f80; /* 点击时的背景颜色 */
+}
+
+.interactive-div {
+    margin-bottom: 2%;
+    background-color: #e7f2f8; /* 初始背景颜色 */
+    /* 其他需要的样式，例如padding, text-align等 */
+    transition: background-color 0.3s; /* 使颜色变化更平滑 */
+    font-weight: 500;
+}
+
+.interactive-div:hover {
+    background-color: #14fc94; /* 鼠标悬停时的背景颜色 */
+}
+
+.interactive-div:active {
+    background-color: #595f80; /* 点击时的背景颜色 */
+}
+
+.clicked{
+    background-color: #14fc94;
+}
+
+.chat-container {
+    width: 60%;
+    margin: auto;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.text {
+    background-color: #fff;
+    width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.user1 .text {
+    background-color: #e7f3fe;
+}
+
+.user2 .text {
+    background-color: #d9ead3;
+}
