@@ -28,6 +28,15 @@ Human evaluation experiments. This study selected 100 questions from 14 harmful 
     <img src="https://notes.sjtu.edu.cn/uploads/upload_b1d5e22b328fcd09f93ae8859bb46fbe.png" width="60%" height="auto">
 </div>
 
+## Citation
+```
+@article{pang2024self,
+  title={Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation},
+  author={Pang, Xianghe and Tang, Shuo and Ye, Rui and Xiong, Yuxin and Zhang, Bolun and Wang, Yanfeng and Chen, Siheng},
+  journal={arXiv preprint arXiv:2402.05699},
+  year={2024}
+}
+```
 ## Todo
 - [ ] Code release
 - [ ] Data and model release
