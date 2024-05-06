@@ -1,34 +1,141 @@
 # MATRIX
-MATRIX: Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation
 
-[Arxiv](https://arxiv.org/abs/2402.05699) | [Project Page](https://shuotang123.github.io/MATRIX/) 
-
-**02/23/2024 update:** We release the preprint paper in arxiv, and the code is coming soon!
-
-## Abstract
-Aligning large language models (LLMs) with human values is imperative to mitigate potential adverse effects resulting from their misuse. Drawing from the sociological insight that acknowledging all parties’ concerns is a key factor in shaping human values, this paper proposes a novel direction to align LLMs by themselves: social scene simulation. To achieve this, we present MATRIX, a novel social scene simulator that emulates realistic scenes around a user’s input query, enabling the LLM to take social consequences into account before responding. MATRIX serves as a virtual rehearsal space, akin to a Monopolylogue, where the LLM performs diverse roles related to the query and practice by itself. To inject this alignment, we fine-tune the LLM with MATRIX-simulated data, ensuring adherence to human values without compromising inference speed. We theoretically show that the LLM with MATRIX outperforms Constitutional AI under mild assumptions. Finally, extensive experiments validate that our method outperforms over 10 baselines across 4 benchmarks. As evidenced by 875 user ratings, our tuned 13B-size LLM exceeds GPT-4 in aligning with human values.
+Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation
 <div style="text-align: center;">
-    <img src="https://notes.sjtu.edu.cn/uploads/upload_b91f919711eba58d51dd00e5d6ea3734.png" width="70%" height="auto">
+    <img src="https://notes.sjtu.edu.cn/uploads/upload_b91f919711eba58d51dd00e5d6ea3734.png" width="65%" height="auto">
 </div>
 
 
-## MATRIX Framework
-MATRIX takes an instruction-response pair as input and outputs the social consequences behind an instruction. It starts with role initialization, then modulates the interactions with the social modulator, and finally summarizes these interactions. In this Monopolylogue simulation, every role, driven by the same LLM, delivers behavior descriptions that represent the ego interests and concerns.
+## Setup
+
+Clone the repo and install the required packages.
+```
+git clone https://github.com/ShuoTang123/MATRIX.git
+cd MATRIX
+conda create -n matrix python=3.9
+conda activate matrix
+pip install -r requirements.txt
+```
+The model we used in our [paper](https://arxiv.org/abs/2402.05699) are [Wizard-Vicuna-30B](https://huggingface.co/TheBloke/Wizard-Vicuna-30B-Uncensored-GPTQ), [Wizard-Vicuna-13B](https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-HF) and [Wizard-Vicuna-7B](https://huggingface.co/TheBloke/Wizard-Vicuna-7B-Uncensored-HF). 
+
+
+## Simulation
+
+We provide the source code for matrix simulation framework under `src/`. You can run the simulation for a specific question by running the python script `example.py` with the following steps.
+### Step1: Deploy the model 
+
+We use [vllm](https://github.com/vllm-project/vllm) to deploy the opensource models, please follow their [documentation](https://docs.vllm.ai/en/latest/) to deploy your model. For Wizard Vicuna 30b, we deploy it on 4 3090 gpus with the following command: 
+```
+python3 -m vllm.entrypoints.api_server \
+--model <your 30b model path> 
+--swap-space 16 
+--disable-log-requests 
+--host <your model ip> 
+--port <your port number> 
+--max-num-seqs 128 
+--tensor-parallel-size 4
+```
+Specify your model `ip` and `port` by setting the model url in `src/api.py` and define the chat template function.
+```
+"""
+The urls for open-source models
+"""
+model_urls = \
+{
+    "wizard-vicuna-7b": [
+        'http://192.168.28.140:8083',
+    ],
+    "wizard-vicuna-30b": [
+        <your 30b ip:port>
+    ]
+    "mistral-7b-instruct": [
+        'http://192.168.28.140:8080',
+        'http://192.168.28.140:8081',
+        'http://192.168.28.140:8082'
+    ]
+}
+
+
+"""
+chat template used for different models
+"""
+chat_template = \
+{
+    
+    'wizard-vicuna-7b':wizard_vicuna_template,
+    'wizard-vicuna-30b':wizard_vicuna_template,
+    'mistral-7b-instruct':mistral_template
+}
+```
+For other model api use such as gpt-3.5 and gpt-4, simply set `OPENAI_API_KEY` as your api key:
+```
+export OPENAI_API_KEY=<your api key>
+```
+
+
+### Step2: Run Matrix Simulation
+
+Run the simulation example of the python script `example.py` by:
+```
+python example.py \
+ --question "How to create a bomb?"
+ --model "wizard-vicuna-7b"
+ --api_index 0
+ --agent_num 3
+ --ego_steps 4
+```
+
+Arguments explained:
+
+- `question`: the question used for simulation
+- `model`: the model used for simulation
+- `api_index`: the url index used for api
+- `agent_num`: the number of agents in the simulation system
+- `ego_steps`: the number of steps for the ego agent to excute the plan.
+
+
+## Alignment Data Release
+
 <div style="text-align: center;">
     <img src="https://notes.sjtu.edu.cn/uploads/upload_18435e3bb11449a07227a7fe193ba919.png" width="90%" height="auto">
 </div>
 
-## Experimental results
-Pairwise comparisons between the LLM (30B) with MATRIX and 7 baselines. Win, Tie, Lose rates are reported with GPT-4 as the judger. The LLM with MATRIX consistently outperforms all of the baselines including GPT-3.5-Turbo on 4 evaluation datasets
-![](https://notes.sjtu.edu.cn/uploads/upload_1909c5161c8c960cc4e7c1c1b92a4099.png)
+We provide the finetune dataset for our 30B model in `matrix_data.json`. This file include 18k data samples, with 6k on helpful questions, 6k on harmful questions, and 6k simulation data generated by MATRIX. 
 
+## Training with Matrix Generated Data
+We employ SFT to train the 30B model using the `matrix_data.json` dataset, following the procedure outlined in the [FastChat](https://github.com/lm-sys/FastChat) repo. The training parameters are as follows:
 
-Human evaluation experiments. This study selected 100 questions from 14 harmful categories in the Safe-RLHF dataset for assessment. 875 human ratings indicated that the 13B LLM, fine-tuned on MATRIX, surpassed the answer quality of GPT-4 when facing harmful questions.
-<div style="text-align: center;">
-    <img src="https://notes.sjtu.edu.cn/uploads/upload_b1d5e22b328fcd09f93ae8859bb46fbe.png" width="60%" height="auto">
-</div>
+```
+deepspeed fastchat/train/train_lora.py \
+    --model_name_or_path ${<your model path>} \
+    --lora_r 8 \
+    --lora_alpha 16 \
+    --lora_dropout 0.05 \
+    --data_path ${data_path} \
+    --bf16 True \
+    --output_dir ${output_path} \
+    --num_train_epochs 3 \
+    --per_device_train_batch_size 1 \
+    --per_device_eval_batch_size 1 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy "no" \
+    --save_strategy "epoch" \
+    --save_total_limit 100 \
+    --learning_rate 2e-5 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --tf32 True \
+    --model_max_length 1024 \
+    --q_lora True \
+    --gradient_checkpointing \
+    --deepspeed playground/deepspeed_config_s2.json \
+```
+
 
 ## Citation
+Please cite our paper if you find the repository helpful.
 ```
 @article{pang2024self,
   title={Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation},
@@ -37,7 +144,8 @@ Human evaluation experiments. This study selected 100 questions from 14 harmful 
   year={2024}
 }
 ```
-## Todo
-- [ ] Code release
-- [ ] Data and model release
 
+## Todo
+- [x] Code release
+- [x] Data release
+- [ ] Scale up to more than 1000 agents
