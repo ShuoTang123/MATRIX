@@ -1,9 +1,19 @@
 # MATRIX
 
-Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation
+MATRIX: Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation  (ICML 2024)
+
+[Paper](https://arxiv.org/abs/2402.05699) | [Project Page](https://shuotang123.github.io/MATRIX/) 
 <div style="text-align: center;">
     <img src="https://notes.sjtu.edu.cn/uploads/upload_b91f919711eba58d51dd00e5d6ea3734.png" width="65%" height="auto">
 </div>
+
+## News
+- **02/23/2024:** We released the preprint paper in arxiv.
+- **05/02/2024:** Our [paper](https://arxiv.org/abs/2402.05699) is accepted by the 41st International Conference on Machine Learning (ICML).
+- **05/06/2024:** 🔥We released the simulation data of MATRIX at [here](#alignment-data-release).
+- **05/06/2024:** 🔥We released the source code of the MATRIX framework.
+
+- **To do:** 🔥We are working to push the boundaries of our simulation system to include more than 1000 agents!
 
 
 ## Setup
@@ -137,15 +147,11 @@ deepspeed fastchat/train/train_lora.py \
 ## Citation
 Please cite our paper if you find the repository helpful.
 ```
-@article{pang2024self,
+@inproceedings{matrix_icml2024,
   title={Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation},
   author={Pang, Xianghe and Tang, Shuo and Ye, Rui and Xiong, Yuxin and Zhang, Bolun and Wang, Yanfeng and Chen, Siheng},
-  journal={arXiv preprint arXiv:2402.05699},
+  booktitle={Proceedings of the 41st International Conference on Machine Learning},
   year={2024}
 }
 ```
 
-## Todo
-- [x] Code release
-- [x] Data release
-- [ ] Scale up to more than 1000 agents
