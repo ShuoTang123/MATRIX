@@ -1,19 +1,24 @@
 # MATRIX
 
-MATRIX: Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation  (ICML 2024)
-
-[Paper](https://arxiv.org/abs/2402.05699) | [Project Page](https://shuotang123.github.io/MATRIX/) 
+Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation  (ICML 2024) ([Paper](https://arxiv.org/abs/2402.05699) | [Project Page](https://shuotang123.github.io/MATRIX/))
 <div style="text-align: center;">
     <img src="https://notes.sjtu.edu.cn/uploads/upload_b91f919711eba58d51dd00e5d6ea3734.png" width="65%" height="auto">
 </div>
 
 ## News
-- **02/23/2024:** We released the preprint paper in arxiv.
-- **05/02/2024:** Our [paper](https://arxiv.org/abs/2402.05699) is accepted by the 41st International Conference on Machine Learning (ICML).
+- **To do:** 🔥We are working to push the boundaries of our simulation system to include more than 1000 agents!
+
 - **05/06/2024:** 🔥We released the simulation data of MATRIX at [here](#alignment-data-release).
+
 - **05/06/2024:** 🔥We released the source code of the MATRIX framework.
 
-- **To do:** 🔥We are working to push the boundaries of our simulation system to include more than 1000 agents!
+- **05/02/2024:** Our [paper](https://arxiv.org/abs/2402.05699) is accepted by the 41st International Conference on Machine Learning (ICML).
+
+- **02/23/2024:** We released the preprint paper in arxiv.
+
+
+
+
 
 
 ## Setup
