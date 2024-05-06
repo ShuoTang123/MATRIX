@@ -1,6 +1,6 @@
 # MATRIX
 
-Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation  (ICML 2024) ([Paper](https://arxiv.org/abs/2402.05699) | [Project Page](https://shuotang123.github.io/MATRIX/))
+Self-Alignment of Large Language Models via Monopolylogue-based Social Scene Simulation (ICML 2024)<br>[Paper](https://arxiv.org/abs/2402.05699) | [Project Page](https://shuotang123.github.io/MATRIX/)
 <div style="text-align: center;">
     <img src="https://notes.sjtu.edu.cn/uploads/upload_b91f919711eba58d51dd00e5d6ea3734.png" width="65%" height="auto">
 </div>
